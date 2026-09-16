@@ -126,6 +126,89 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,7vw,58px);li
 .cta .btn.secondary{background:transparent;border-color:rgba(255,255,255,.28);color:#fff;margin-top:10px}
 .privacy{font-size:12px;color:var(--muted);line-height:1.45;margin-top:18px;text-align:center}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 8px 0}
+
+.program-box{
+  margin:30px 0;
+  border:1px solid rgba(192,112,48,.24);
+  border-radius:20px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 12px 28px rgba(42,42,42,.07);
+}
+.program-toggle{
+  width:100%;
+  border:none;
+  background:linear-gradient(135deg,var(--copper),#D28A4A);
+  color:#fff;
+  padding:20px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  cursor:pointer;
+  text-align:left;
+  box-shadow:0 10px 24px rgba(192,112,48,.22);
+  transition:.18s ease;
+}
+.program-toggle:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 30px rgba(192,112,48,.28);
+}
+.program-toggle strong{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:22px;
+  line-height:1.2;
+  color:#fff;
+}
+.program-toggle span{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-size:22px;
+  transition:.2s ease;
+  flex:0 0 auto;
+}
+.program-toggle.open span{transform:rotate(45deg)}
+.program-content{
+  display:none;
+  padding:4px 20px 20px;
+}
+.program-content.open{display:block}
+.program-intro{
+  color:#55504b;
+  line-height:1.55;
+  margin:12px 0 16px;
+}
+.program-day{
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:12px;
+  padding:14px 0;
+  border-top:1px solid #eee8e1;
+}
+.program-day:first-of-type{border-top:none}
+.program-num{
+  width:42px;height:42px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--stone);
+  color:var(--steel);
+  font-weight:700;
+  border:1px solid rgba(74,106,138,.12);
+}
+.program-day b{display:block;margin-bottom:4px}
+.program-day p{margin:0;color:#5b5650;font-size:14px;line-height:1.45}
+.program-meta{
+  margin-top:16px;
+  padding:15px 16px;
+  border-radius:14px;
+  background:var(--stone);
+  color:#514d48;
+  font-size:14px;
+  line-height:1.55;
+}
+
 @media(max-width:560px){
   .hero{padding:32px 22px 26px}.question{padding:22px}.quiz-head{padding:20px 22px 0}.result{padding:28px 22px}
   .brand{font-size:12px}.summary{grid-template-columns:1fr}.progress-line span:last-child{display:none}
@@ -206,12 +289,98 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,7vw,58px);li
         <p>Если результат не совпадает с Вашим ощущением — не подгоняйте жизнь под тест. Ваши реальные факты важнее.</p>
       </div>
 
+
+      <div class="program-box">
+        <button class="program-toggle" id="programToggle" type="button">
+          <strong>Что будет на 7-дневном интенсиве</strong>
+          <span>+</span>
+        </button>
+        <div class="program-content" id="programContent">
+          <p class="program-intro">Здесь Вы не просто узнаете что-то о своей семье. Каждый день будет помогать увидеть, <strong>что из семейной истории уже живёт в Вашей жизни — и что Вы хотите с этим делать дальше.</strong></p>
+
+          <div class="program-day">
+            <div class="program-num">1</div>
+            <div>
+              <b>Увидеть свою семейную историю целиком</b>
+              <p>Начнёте собирать Карту рода: кто был до Вас, как жили, какие события и жизненные истории повторялись.</p>
+              <p><strong>В результате:</strong> появится первая понятная картина семьи и 2–3 темы, которые хочется исследовать дальше.</p>
+            </div>
+          </div>
+
+          <div class="program-day">
+            <div class="program-num">2</div>
+            <div>
+              <b>Понять, что Вы взяли из женской линии</b>
+              <p>Посмотрите на маму, бабушек и прабабушек: отношения, деньги, помощь, контроль, материнство, самостоятельность.</p>
+              <p><strong>В результате:</strong> увидите, что из женской модели Вы повторяете и какие качества женщин рода стали Вашей силой.</p>
+            </div>
+          </div>
+
+          <div class="program-day">
+            <div class="program-num">3</div>
+            <div>
+              <b>Понять, что пришло из мужской линии</b>
+              <p>Посмотрите на папу, дедушек и мужчин семьи: ответственность, работу, деньги, решения, границы и отношения.</p>
+              <p><strong>В результате:</strong> станет понятнее, какие мужские семейные модели Вы перенесли в свою жизнь и что хорошего хотите сохранить.</p>
+            </div>
+          </div>
+
+          <div class="program-day">
+            <div class="program-num">4</div>
+            <div>
+              <b>Получить свой персональный родовой код</b>
+              <p>Я рассчитаю две персональные родовые темы — по женской и мужской линиям. Вы сравните их с реальной историей своей семьи.</p>
+              <p><strong>В результате:</strong> увидите, какая тема действительно прослеживается в семье и как она может проявляться уже в Вашей жизни.</p>
+            </div>
+          </div>
+
+          <div class="program-day">
+            <div class="program-num">5</div>
+            <div>
+              <b>Увидеть, что Вы получили от родителей и что передаёте дальше</b>
+              <p>Сравним: как воспитывали Вас → что Вы делаете сегодня → что хотите передавать своим детям уже иначе. Плюс персональный детско-родительский код.</p>
+              <p><strong>В результате:</strong> заметите одну конкретную родительскую модель, которую повторяете или от которой ушли в противоположную крайность.</p>
+            </div>
+          </div>
+
+          <div class="program-day">
+            <div class="program-num">6</div>
+            <div>
+              <b>Выбрать сценарий, который больше не хотите повторять</b>
+              <p>Возьмёте одну знакомую тему и разберёте: как она включается, что Вы обычно делаете и как хотите попробовать действовать теперь.</p>
+              <p><strong>В результате:</strong> появится один конкретный новый шаг, который можно сделать уже сейчас.</p>
+            </div>
+          </div>
+
+          <div class="program-day">
+            <div class="program-num">7</div>
+            <div>
+              <b>Понять, что хорошего Вы хотите взять из семьи дальше</b>
+              <p>Посмотрите на качества, способности, характер, семейные ценности и сильные стороны своего рода.</p>
+              <p><strong>В результате:</strong> соберёте свою формулу: что не хочу повторять → что хочу сохранить → что хочу передать дальше.</p>
+            </div>
+          </div>
+
+          <div class="program-meta">
+            <strong>С чем Вы выйдете из интенсива:</strong><br><br>
+            • своя Карта рода;<br>
+            • понимание повторений по женской и мужской линиям;<br>
+            • персональные родовые энергии;<br>
+            • персональный детско-родительский код;<br>
+            • один сценарий, который Вы действительно узнаёте в своей жизни;<br>
+            • конкретный новый шаг;<br>
+            • понимание того, какую силу своей семьи хотите сохранить.<br><br>
+            <strong>Формат:</strong> закрытый Telegram-чат, короткие уроки и аудио, одно основное задание в день, рабочие тетради и моя обратная связь. Ориентир — 20–40 минут в день.
+          </div>
+        </div>
+      </div>
+
       <div class="cta" style="text-align:center">
         <h3>Хотите разобрать свою семейную историю глубже?</h3>
-        <p>На 7-дневном интенсиве <strong>«Что я несу из рода»</strong> мы смотрим женскую и мужскую линии, родителей и детей, персональный родовой код, повторяющиеся сценарии и то хорошее, что хочется взять из семьи дальше.</p>
-        <p><strong>Увидеть. Понять. Выбрать. Взять силу.</strong></p>
-        <button class="btn" onclick="window.open('https://t.me/liuda_karayani','_blank')">Написать «РОД» в Telegram</button>
-        <button class="btn secondary" onclick="window.open('https://instagram.com/numerolog_karayani','_blank')">Открыть Instagram</button>
+        <p>Если программа Вам откликается, можно продолжить в 7-дневном интенсиве <strong>«Что я несу из рода»</strong>.</p>
+        <p><strong>На отдельной странице Вы увидите подробную программу, формат, результаты и стоимость участия.</strong></p>
+        <a class="btn" href="landing_what_i_carry_from_family_FINAL_payment_fixed.html" style="text-decoration:none;display:flex;margin-top:14px">Посмотреть интенсив подробнее</a>
+        <button class="btn secondary" style="margin-top:10px" onclick="window.open('https://t.me/liuda_karayani','_blank')">Задать вопрос в Telegram</button>
       </div>
 
       <button class="btn secondary" id="restartBtn" style="margin-top:16px">Пройти ещё раз</button>
@@ -389,6 +558,16 @@ document.getElementById("startBtn").onclick=()=>{
 document.getElementById("restartBtn").onclick=()=>{
   index=0;answersData=[];show(startScreen);
 };
+
+const programToggle=document.getElementById("programToggle");
+const programContent=document.getElementById("programContent");
+if(programToggle && programContent){
+  programToggle.onclick=()=>{
+    programToggle.classList.toggle("open");
+    programContent.classList.toggle("open");
+  };
+}
+
 </script>
 </body>
 </html>
