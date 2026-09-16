@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2A2A2A">
+<title>Что я повторяю за своей семьёй? — мини-диагностика</title>
+<style>
+:root{
+  --charcoal:#2A2A2A; --steel:#4A6A8A; --copper:#C07030; --stone:#F5F0E8;
+  --paper:#FFFDFC; --muted:#6E6963; --line:#D9D2C8; --soft:#EEE8E1;
+  --shadow:0 18px 55px rgba(42,42,42,.12); --radius:24px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--charcoal);min-height:100vh;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(74,106,138,.14), transparent 22%),
+    radial-gradient(circle at 88% 18%, rgba(192,112,48,.12), transparent 18%),
+    linear-gradient(135deg,rgba(74,106,138,.08),transparent 38%),
+    linear-gradient(315deg,rgba(192,112,48,.07),transparent 34%),
+    var(--stone);
+}
+.shell{width:min(780px,calc(100% - 28px));margin:0 auto;padding:22px 0 44px}
+.brand{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px;color:var(--muted);font-size:13px}
+.brand strong{color:var(--charcoal)}
+.card{background:rgba(255,253,252,.97);border:1px solid rgba(42,42,42,.08);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.screen{display:none}.screen.active{display:block}
+.hero{padding:44px 34px 34px;position:relative;text-align:center}
+.hero:before{content:"";position:absolute;width:160px;height:160px;border:1px solid rgba(74,106,138,.18);border-radius:50%;right:-64px;top:-68px}
+.hero:after{content:"";position:absolute;width:92px;height:92px;border:1px solid rgba(192,112,48,.20);right:42px;top:22px;transform:rotate(45deg)}
+.eyebrow{color:var(--copper);font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}
+h1,h2,h3,p{margin-top:0}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,7vw,58px);line-height:1.02;letter-spacing:-.03em;margin:0 auto 18px;max-width:630px}
+.lead{font-size:18px;line-height:1.55;color:#4b4844;max-width:650px;margin:0 auto 18px}
+.note{background:var(--stone);border-left:3px solid var(--steel);border-radius:14px;padding:16px 17px;font-size:14px;line-height:1.55;color:#514d48;margin:18px 0 24px}
+.example{border:1px solid var(--line);border-radius:16px;padding:16px;margin:16px 0 22px;background:#fff}
+.example b{display:block;margin-bottom:8px}
+.example div{font-size:14px;line-height:1.55;color:#55504b}
+.btn{appearance:none;border:none;border-radius:14px;padding:15px 20px;font-size:16px;font-weight:700;cursor:pointer;transition:.2s ease;background:var(--charcoal);color:#fff;width:100%}
+.btn:hover{transform:translateY(-1px);opacity:.95}
+.btn.secondary{background:transparent;color:var(--charcoal);border:1px solid var(--line)}
+.btn.copper{background:var(--copper)}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.pill{font-size:12px;color:#55504b;background:#f1ece5;border:1px solid #e4ddd4;padding:7px 10px;border-radius:999px}
+.hero-visuals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
+.hero-card{
+  background:linear-gradient(180deg,#ffffff,#faf6f1);
+  border:1px solid rgba(42,42,42,.08);
+  border-radius:18px;
+  padding:16px 12px;
+  min-height:120px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  position:relative;
+}
+.hero-icon{
+  width:54px;height:54px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px;font-size:24px;font-weight:700;
+  background:linear-gradient(135deg,rgba(74,106,138,.12),rgba(192,112,48,.12));
+  border:1px solid rgba(74,106,138,.14);
+}
+.hero-card b{display:block;font-size:14px;margin-bottom:4px}
+.hero-card span{display:block;font-size:12px;line-height:1.4;color:var(--muted)}
+.matrix-icon{
+  background:
+    linear-gradient(rgba(74,106,138,.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,106,138,.16) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(192,112,48,.18), rgba(74,106,138,.10));
+  background-size:13px 13px,13px 13px,100% 100%;
+  color:var(--charcoal);
+  font-family:Georgia,"Times New Roman",serif;
+}
+.center-title{text-align:center}
+.result-head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.result-badge{
+  width:86px;height:86px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.92) 0 36%, transparent 37%),
+    linear-gradient(135deg, rgba(74,106,138,.22), rgba(192,112,48,.18));
+  border:1px solid rgba(74,106,138,.18);
+  position:relative;
+}
+.result-badge:before{
+  content:"";position:absolute;inset:9px;border-radius:50%;
+  border:1px solid rgba(74,106,138,.25);
+}
+.result-badge span{font-family:Georgia,"Times New Roman",serif;font-size:28px;color:var(--charcoal)}
+.quiz-head{padding:22px 26px 0}
+.progress-wrap{width:100%;height:7px;background:#ebe4dc;border-radius:999px;overflow:hidden;margin-bottom:12px}
+.progress{height:100%;width:0;background:linear-gradient(90deg,var(--steel),var(--copper));transition:width .25s ease}
+.progress-line{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;gap:12px}
+.question{padding:26px}
+.q-kicker{color:var(--steel);font-size:13px;font-weight:700;margin-bottom:10px}
+.question h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(24px,5vw,34px);line-height:1.2;margin-bottom:12px}
+.q-help{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:20px}
+.answers{display:grid;gap:10px}
+.answer{width:100%;text-align:left;border:1px solid var(--line);background:#fff;color:var(--charcoal);border-radius:15px;padding:14px 15px;font-size:14.5px;line-height:1.35;cursor:pointer;transition:.16s ease;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.answer:hover{border-color:var(--steel);background:#f8fafc;transform:translateY(-1px)}
+.answer small{color:var(--muted);font-size:17px}
+.result{padding:34px 30px}
+.result h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,6vw,46px);line-height:1.08;margin-bottom:10px}
+.result-intro{color:#59544e;line-height:1.6;margin-bottom:20px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 26px}
+.stat{padding:15px;border:1px solid var(--line);border-radius:16px;background:#fff;text-align:center}
+.stat strong{display:block;font-size:26px;font-family:Georgia,"Times New Roman",serif}
+.stat span{display:block;font-size:12px;color:var(--muted);line-height:1.35;margin-top:4px}
+.theme-card{border:1px solid var(--line);border-radius:18px;padding:20px;margin:14px 0;background:#fff}
+.theme-card.top{border-color:rgba(192,112,48,.55);background:linear-gradient(180deg,#fff,#fffaf5)}
+.theme-card h3{margin-bottom:8px;font-size:19px}
+.theme-card p{color:#55504b;line-height:1.55;margin-bottom:10px}
+.theme-card .count{display:inline-block;font-size:12px;font-weight:700;color:var(--steel);background:#eef3f7;border-radius:999px;padding:6px 9px;margin-bottom:10px}
+.theme-card .prompt{color:var(--charcoal);font-weight:700;margin-bottom:8px}
+.theme-card .step{margin-bottom:0;color:#4f4a45}
+.scorebar{height:7px;background:#eee8e1;border-radius:999px;overflow:hidden;margin-top:12px}
+.scorebar>div{height:100%;background:var(--steel);border-radius:999px}
+.reflection{margin:24px 0;padding:20px;border-radius:18px;background:var(--stone)}
+.reflection h3{margin-bottom:10px}
+.reflection p{line-height:1.55;color:#514d48;margin-bottom:8px}
+.cta{margin-top:28px;padding:24px;border-radius:20px;background:var(--charcoal);color:#fff}
+.cta h3{font-family:Georgia,"Times New Roman",serif;font-size:28px;margin-bottom:10px}
+.cta p{color:#ece8e3;line-height:1.55}
+.cta .btn{background:var(--copper);margin-top:10px}
+.cta .btn.secondary{background:transparent;border-color:rgba(255,255,255,.28);color:#fff;margin-top:10px}
+.privacy{font-size:12px;color:var(--muted);line-height:1.45;margin-top:18px;text-align:center}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 8px 0}
+@media(max-width:560px){
+  .hero{padding:32px 22px 26px}.question{padding:22px}.quiz-head{padding:20px 22px 0}.result{padding:28px 22px}
+  .brand{font-size:12px}.summary{grid-template-columns:1fr}.progress-line span:last-child{display:none}
+  .hero-visuals{grid-template-columns:1fr;gap:10px}
+}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="brand"><strong>Людмила Караяни</strong><span>нумеролог • цифровой психолог</span></div>
+
+  <section class="card screen active" id="start">
+    <div class="hero">
+      <div class="eyebrow">Бесплатная мини-диагностика</div>
+      <h1>Что я повторяю за своей семьёй?</h1>
+      <p class="lead">10 коротких ситуаций, по которым тест сравнит: <strong>что есть у Вас и что Вы узнаёте в своей семье</strong>. В конце Вы получите темы, где совпадений больше всего.</p>
+
+      <div class="hero-visuals">
+        <div class="hero-card">
+          <div class="hero-icon">↔</div>
+          <b>Я и семья</b>
+          <span>Сравниваем не только Вас, но и знакомые семейные модели</span>
+        </div>
+        <div class="hero-card">
+          <div class="hero-icon matrix-icon">7</div>
+          <b>10 коротких ситуаций</b>
+          <span>Быстро, без длинных анкет и перегруза</span>
+        </div>
+        <div class="hero-card">
+          <div class="hero-icon">✓</div>
+          <b>Результат сразу</b>
+          <span>Покажу, какие темы совпали чаще всего</span>
+        </div>
+      </div>
+
+      <div class="example" style="text-align:left;max-width:650px;margin:16px auto 22px;">
+        <b>Как отвечать?</b>
+        <div>Если Вы замечаете это и у себя, и у кого-то из семьи — выбирайте <strong>«Есть и у меня, и в семье»</strong>.</div>
+      </div>
+
+      <div class="note" style="text-align:left;max-width:650px;margin:18px auto 24px;">
+        Это не медицинская и не психологическая диагностика и не доказательство причин. Результат строится только на Ваших ответах и показывает, <strong>какие семейные темы у Вас совпали чаще</strong>.
+      </div>
+
+      <button class="btn" id="startBtn" style="max-width:420px;margin:0 auto;display:block">Начать диагностику</button>
+      <div class="meta" style="justify-content:center"><span class="pill">10 ситуаций</span><span class="pill">≈ 2–3 минуты</span><span class="pill">результат сразу</span></div>
+    </div>
+  </section>
+
+  <section class="card screen" id="quiz">
+    <div class="quiz-head">
+      <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+      <div class="progress-line"><span id="progressText">Вопрос 1 из 10</span><span>Сравниваем Вас и Вашу семью</span></div>
+    </div>
+    <div class="question">
+      <div class="q-kicker" id="qKicker">Вопрос 1</div>
+      <h2 id="qText"></h2>
+      <p class="q-help">Выберите вариант, который ближе всего к Вашей ситуации.</p>
+      <div class="answers" id="answers"></div>
+    </div>
+  </section>
+
+  <section class="card screen" id="result">
+    <div class="result">
+      <div class="result-head">
+        <div class="eyebrow">Ваш результат</div>
+        <div class="result-badge"><span>7</span></div>
+        <h2 class="center-title">Что по Вашим ответам повторяется чаще</h2>
+        <p class="result-intro" id="resultIntro"></p>
+      </div>
+
+      <div class="summary" id="summary"></div>
+      <div id="themeResults"></div>
+
+      <div class="reflection">
+        <h3>Как использовать результат</h3>
+        <p>Не нужно искать у себя всё сразу. Возьмите <strong>первую тему</strong> и вспомните 1–2 конкретные семейные истории, где она проявлялась.</p>
+        <p>Если результат не совпадает с Вашим ощущением — не подгоняйте жизнь под тест. Ваши реальные факты важнее.</p>
+      </div>
+
+      <div class="cta" style="text-align:center">
+        <h3>Хотите разобрать свою семейную историю глубже?</h3>
+        <p>На 7-дневном интенсиве <strong>«Что я несу из рода»</strong> мы смотрим женскую и мужскую линии, родителей и детей, персональный родовой код, повторяющиеся сценарии и то хорошее, что хочется взять из семьи дальше.</p>
+        <p><strong>Увидеть. Понять. Выбрать. Взять силу.</strong></p>
+        <button class="btn" onclick="window.open('https://t.me/liuda_karayani','_blank')">Написать «РОД» в Telegram</button>
+        <button class="btn secondary" onclick="window.open('https://instagram.com/numerolog_karayani','_blank')">Открыть Instagram</button>
+      </div>
+
+      <button class="btn secondary" id="restartBtn" style="margin-top:16px">Пройти ещё раз</button>
+      <p class="privacy">Ответы считаются только в Вашем браузере и никуда не отправляются.</p>
+    </div>
+  </section>
+
+  <div class="footer">@numerolog_karayani</div>
+</main>
+
+<script>
+const questions = [
+  {c:"control", t:"Мне проще всё сделать самой / самому, чем просить о помощи."},
+  {c:"control", t:"Мне спокойнее, когда важные дела я контролирую сама / сам."},
+
+  {c:"money", t:"Даже когда с деньгами всё нормально, остаётся страх, что они закончатся."},
+  {c:"money", t:"В семье было принято экономить, откладывать «на чёрный день» или считать, что деньги даются тяжело."},
+
+  {c:"feelings", t:"Мне проще промолчать, чем сразу сказать, что меня что-то не устраивает."},
+  {c:"feelings", t:"В семье было не принято открыто говорить о чувствах и сложностях."},
+
+  {c:"duty", t:"Я часто ставлю потребности близких выше своих."},
+  {c:"duty", t:"В моей семье кто-то тоже жил в первую очередь ради других."},
+
+  {c:"parents", t:"Я замечаю у себя фразы или реакции мамы или папы, которые когда-то не хотела / не хотел повторять."},
+  {c:"parents", t:"Я стараюсь делать всё не как родители, но похожая тема всё равно иногда возвращается."}
+];
+
+const options = [
+  {label:"Нет — ни у меня, ни в семье", type:"none"},
+  {label:"Было в семье, но не у меня", type:"family"},
+  {label:"Есть у меня, но в семье не помню", type:"self"},
+  {label:"Есть и у меня, и в семье", type:"repeat"},
+  {label:"Не знаю про семью", type:"unknown"}
+];
+
+const themes = {
+  control:{
+    title:"Всё на себе и контроль",
+    strength:"Сильная сторона рядом с этой темой: самостоятельность, надёжность, способность собраться и справиться.",
+    prompt:"Проверьте в семейной истории: кто привык всё держать на себе и кому было сложно принимать помощь?",
+    step:"Первый маленький шаг: один раз попросить о конкретной помощи и не переделывать за человеком."
+  },
+  money:{
+    title:"Деньги и безопасность",
+    strength:"Сильная сторона рядом с этой темой: бережливость, предусмотрительность, умение думать о будущем.",
+    prompt:"Вспомните: какие фразы о деньгах чаще всего звучали у Вас дома?",
+    step:"Первый маленький шаг: выписать одну семейную денежную фразу и спросить себя — она до сих пор соответствует моей жизни?"
+  },
+  feelings:{
+    title:"Терпеть, молчать и сохранять отношения",
+    strength:"Сильная сторона рядом с этой темой: терпение, верность, способность сохранять связь и заботиться о близких.",
+    prompt:"Проверьте: в Вашей семье было принято обсуждать сложное или чаще молчать, терпеть и не выносить проблемы наружу?",
+    step:"Первый маленький шаг: в одной безопасной ситуации сказать о своём недовольстве раньше, чем оно накопится."
+  },
+  duty:{
+    title:"Сначала другие — потом я",
+    strength:"Сильная сторона рядом с этой темой: ответственность, забота, готовность поддерживать близких.",
+    prompt:"Посмотрите: кто в семье жил в первую очередь ради детей, партнёра, родителей или общего «надо»?",
+    step:"Первый маленький шаг: выбрать одно небольшое «хочу» на этой неделе и не объяснять себе, почему оно не заслужено."
+  },
+  parents:{
+    title:"Родительские модели",
+    strength:"Сильная сторона рядом с этой темой: вовлечённость в семью и желание дать детям лучшее.",
+    prompt:"Вспомните: что Вы когда-то обещали себе никогда не повторять за мамой или папой?",
+    step:"Первый маленький шаг: заметить одну знакомую фразу или реакцию и заранее придумать, как Вы хотите сказать или сделать по-другому."
+  }
+};
+
+let index=0;
+let answersData=[];
+const startScreen=document.getElementById("start");
+const quizScreen=document.getElementById("quiz");
+const resultScreen=document.getElementById("result");
+const qText=document.getElementById("qText");
+const qKicker=document.getElementById("qKicker");
+const answers=document.getElementById("answers");
+const progress=document.getElementById("progress");
+const progressText=document.getElementById("progressText");
+
+function show(screen){
+  [startScreen,quizScreen,resultScreen].forEach(s=>s.classList.remove("active"));
+  screen.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function renderQuestion(){
+  const q=questions[index];
+  qText.textContent=q.t;
+  qKicker.textContent=`Ситуация ${index+1}`;
+  progressText.textContent=`Ситуация ${index+1} из ${questions.length}`;
+  progress.style.width=`${(index/questions.length)*100}%`;
+  answers.innerHTML="";
+  options.forEach(o=>{
+    const b=document.createElement("button");
+    b.className="answer";
+    b.innerHTML=`<span>${o.label}</span><small>›</small>`;
+    b.onclick=()=>{
+      answersData.push({category:q.c,type:o.type});
+      index++;
+      if(index<questions.length) renderQuestion(); else renderResult();
+    };
+    answers.appendChild(b);
+  });
+}
+function renderResult(){
+  const keys=Object.keys(themes);
+  const stats={};
+  keys.forEach(k=>stats[k]={repeat:0,family:0,self:0,none:0,unknown:0});
+  answersData.forEach(a=>stats[a.category][a.type]++);
+
+  const totalRepeat=answersData.filter(a=>a.type==="repeat").length;
+  const totalFamily=answersData.filter(a=>a.type==="family").length;
+  const totalSelf=answersData.filter(a=>a.type==="self").length;
+  const totalUnknown=answersData.filter(a=>a.type==="unknown").length;
+
+  let ranked=keys.map(k=>({key:k,...stats[k]}))
+    .sort((a,b)=>(b.repeat-a.repeat)||((b.family+b.self)-(a.family+a.self)));
+
+  let intro;
+  if(totalRepeat===0 && totalUnknown>=6){
+    intro="По многим пунктам пока не хватает семейной информации, поэтому тест не будет придумывать вывод за Вас. Ниже покажу темы, которые стоит просто понаблюдать.";
+  } else if(totalRepeat===0){
+    intro="По Вашим ответам прямых совпадений «есть и у меня, и в семье» почти не видно. Возможно, Вы уже многое проживаете иначе — или эти пять тем просто не являются для Вас ведущими.";
+  } else if(totalRepeat<=4){
+    intro=`Вы отметили ${totalRepeat} ${word(totalRepeat,"совпадение","совпадения","совпадений")} из 10 ситуаций. Ниже — где повторения собрались чаще всего.`;
+  } else {
+    intro=`Вы отметили ${totalRepeat} ${word(totalRepeat,"совпадение","совпадения","совпадений")} из 10 ситуаций. Это не означает, что причина обязательно в семье, но несколько тем действительно повторились в Ваших ответах.`;
+  }
+  document.getElementById("resultIntro").textContent=intro;
+
+  const summary=document.getElementById("summary");
+  summary.innerHTML=`
+    <div class="stat"><strong>${totalRepeat}</strong><span>ситуаций есть и у Вас, и в семье</span></div>
+    <div class="stat"><strong>${totalFamily}</strong><span>были в семье, но Вы их у себя не отмечаете</span></div>
+    <div class="stat"><strong>${totalSelf}</strong><span>есть у Вас, но семейного совпадения Вы не видите</span></div>
+  `;
+
+  const container=document.getElementById("themeResults");
+  container.innerHTML="";
+  ranked.forEach((r,i)=>{
+    const t=themes[r.key];
+    const div=document.createElement("div");
+    const isTop=r.repeat===ranked[0].repeat && r.repeat>0;
+    div.className="theme-card"+(isTop?" top":"");
+    const pct=Math.round((r.repeat/2)*100);
+    let label = r.repeat===0 ? "Совпадений не отмечено" : `${r.repeat} из 2 ситуаций совпали`;
+    div.innerHTML=`
+      <span class="count">${label}</span>
+      <h3>${isTop?"Чаще всего повторяется: ":""}${t.title}</h3>
+      <p>${t.strength}</p>
+      <p class="prompt">${t.prompt}</p>
+      <p class="step"><strong>Что можно попробовать:</strong> ${t.step}</p>
+      <div class="scorebar"><div style="width:${pct}%"></div></div>
+    `;
+    container.appendChild(div);
+  });
+
+  if(totalUnknown>0){
+    const p=document.createElement("p");
+    p.style.cssText="color:#6E6963;font-size:13px;line-height:1.5;margin-top:18px";
+    p.textContent=`По ${totalUnknown} пунктам Вы выбрали «не знаю про семью». Они не считались как повторение.`;
+    container.appendChild(p);
+  }
+  show(resultScreen);
+}
+function word(n,one,few,many){
+  const n10=n%10,n100=n%100;
+  if(n10===1&&n100!==11)return one;
+  if(n10>=2&&n10<=4&&(n100<12||n100>14))return few;
+  return many;
+}
+document.getElementById("startBtn").onclick=()=>{
+  index=0;answersData=[];show(quizScreen);renderQuestion();
+};
+document.getElementById("restartBtn").onclick=()=>{
+  index=0;answersData=[];show(startScreen);
+};
+</script>
+</body>
+</html>
